@@ -5,9 +5,10 @@ beta 0.10.6
 version note: 
 =============
  - ajout:
-    - ajout d'une securité au demarrage pour eviter les plantage
+    - securité au demarrage pour eviter les plantage
     - amelioration du traitement de la premiere connexion
     - amelioration interne du NUS
+    - commande version qui donne la version du systeme ainsi que les note de version (uniquement en francais pour le moment)
  - fonctionnalité disponible:
     - NUS via la commande new lors de la connexion
     - autoAuth, un systeme qui permet l'auto connexion
