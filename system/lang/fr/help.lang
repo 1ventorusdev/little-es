@@ -1,0 +1,36 @@
+little es $vername
+version : $ver
+liste des commande:
+
+commande de controle de little es:
+unlog              permet de se deconnecter pour changer d'utilisateur
+shutdown           eteint little es et l'ordinateur
+close              eteint uniquement little es si c'est possible
+
+commande du systeme de fichier:
+cd [path]          si le path est present permet de se delpacer a cette endroit de l'ordinateur sinon affiche le path actuel
+cd..               permet de se rendre dans le dossier parent
+cd/                permet de se rendre a la racine du disque
+ls [path]          affiche la liste des fichier et dossier present dans le path, si il n'y a pas de path alors dans cette endroit de l'ordinateur
+dir [path]         identique a ls mais affiche clairement le type d'element que c'est ainsi que si c'est une app ou non
+disc               liste les disque accessible
+[disc]             permet de se rendre a la racine ddu disque en argument
+                   
+commande internet: 
+ping               
+tracert            
+ipinfo             
+                   
+commande visuel et textuel:
+echo [arg]         affiche le texte en argument
+? [arg]            si l'arg commence par "!" alors affiche se qui le suit, si il commence par "$" affiche la valeur associé a cette variable
+![text] = [var]    sauvegarde la texte entre le "!" et le "=" dans la variable du nom de var
+$[var1] = [var2]   sauvegarde dans la variable du nom de var2 la valeur associé a la donnée var1
+
+donnée $var:
+$d                 la date d'aujourd'hui
+$t                 l'heure actuel
+$p                 le path actuel
+\$username         le nom d'utilisateur de la session
+$hostname          le nom de la machine
+$v                 la version

@@ -1,0 +1,36 @@
+little es $vername
+version : $ver
+command list:
+
+control command of little es:
+unlog              for change user connected
+shutdown           shutdown little es and computer
+close              shutdown only little es
+
+file's system command:
+cd [path]          if path is not present then print print the actual path, if path is present then go to path
+cd..               for go to parent directory
+cd/                for go to root of this disk
+ls [path]          print list of directoriezs and file in the path, if path is not present then print for the actual path
+dir [path]         identic to ls but print lightly if directory or file, and identify if this file is an app
+disc               list avaliable disk
+[disk]             for go to root of the disk in arg
+                   
+internet command: 
+ping               
+tracert            
+ipinfo             
+                   
+visual and textual command:
+echo [arg]         print arg
+? [arg]            if arg start with "!" print all text after this, if start with "$" print value associeted to the variable in arg
+![text] = [var]    save text between "!" and "=" in var with name of var
+$[var1] = [var2]   save in variable with name of var2 the value associeted to var1 data
+
+$var data:
+$d                 today date
+$t                 now hour
+$p                 actual path
+\$username         username of this session
+$hostname          hostname of this computer
+$v                 version of
