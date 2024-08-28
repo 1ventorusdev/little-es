@@ -160,9 +160,6 @@ try:
                 notes_en_cours = True  # On commence à enregistrer les notes de cette version
                 print("version")
             elif notes_en_cours:
-                print("l actuel: ", ligne_actuelle)
-                print("l precedente: ", ligne_precedente)
-                print("verification: ", (ligne_actuelle == '-' * len(ligne_actuelle) and (ligne_precedente != version and lines[i - 2].strip() != version)))
                 # Si on trouve une ligne de tirets et que la ligne précédente n'est pas le nom de version, on arrête l'enregistrement
                 if ligne_actuelle == '-' * len(ligne_actuelle) and (ligne_precedente != version and lines[i - 2].strip() != version):
                     notes_en_cours = False
