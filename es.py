@@ -266,6 +266,12 @@ try:
         # for log before real boot
         def login():
             global username
+
+            if os.path.exists(os.path.join(os_location, "tmp", "firstuser.temp")):
+                with open(os.path.join(os_location, "tmp", "newusr.usr"), "w+"):
+                    pass
+                return
+
             if os.path.exists(os.path.join(os_location, "tmp", "user-log.temp")):
                 with open(os.path.join(os_location, "tmp", "user-log.temp"), "r") as dta:
                     data = dta.read()
@@ -280,16 +286,18 @@ try:
                         return
                 
             while True:
-                user = input("enter username : ")
+                print("enter username for log in or \"new\" for create new user")
+                user = input("username : ")
                 if user == "close" or user == "exit":
+                    System.shutdownSystem()
                     quit()
                 elif user == "new":
-                    with open(os.path.join(os_location,"newusr.usr"), "w+"):
+                    with open(os.path.join(os_location, "tmp", "newusr.usr"), "w+"):
                         pass
                     break
                 isGoodUsername = Security.verify_username(user)
                 if isGoodUsername == "True":
-                    password = getpass.getpass("enter password : ")
+                    password = getpass.getpass("password : ")
                     isGoodPassword = Security.verify_password(password)
                     print(isGoodPassword)
                     if isGoodPassword == f" ":
@@ -301,7 +309,7 @@ try:
 
         # new user system
         def nus():
-            if not os.path.exists(os.path.join(os_location,"newusr.usr")):
+            if not os.path.exists(os.path.join(os_location, "tmp", "newusr.usr")):
                 return
 
             lang = "en"
@@ -319,8 +327,9 @@ try:
             notavaliableuser = os.listdir(os.path.join(os_location, "data"))
 
             while True:
-                print("NUS (New User System) started")
+                print("NUS 0.5 (New User System) started")
                 print("please enter correct value in all input")
+                print("during this process it's impossible to exit, please go to end of NUS")
                 print("select language in this list")
                 for language in avaliablelang:
                     print(f" - {language}")
@@ -442,7 +451,7 @@ try:
 
             print("\n")
             print(recaptext)
-
+            
             os.mkdir(os.path.join(os_location, "data", commonName))
             os.mkdir(os.path.join(os_location, "home", commonName))
             os.mkdir(os.path.join(os_location, "home", commonName, "document"))
@@ -466,7 +475,9 @@ try:
                 dta["familyname"] = familyname
                 dta["birthday"] = birthday
 
-            os.remove(os.path.join(os_location,"newusr.usr"))
+            if os.path.exists(os.path.join(os_location, "tmp", "firstuser.temp")):
+                os.remove(os.path.join(os_location, "tmp", "firstuser.temp"))
+            os.remove(os.path.join(os_location, "tmp", "newusr.usr"))
 
             with open(os.path.join(os_location, "system", "lang", lang, "nusrestart.lang"), "r") as txt:
                 restartText = txt.read()
@@ -476,6 +487,7 @@ try:
                 for key in textvar:
                     if key in restartText:
                         restartText = restartText.replace(key, textvar[key])
+
 
             while True:
                 print(restartText)
@@ -500,6 +512,17 @@ try:
                                     unckowncommand = unckowncommand.replace(key, textvar[key])
                     print(unckowncommand)
 
+        def systemfileverification():
+            folders = ["home", "system", "data", "tmp", "debug", "boot", "media"]
+
+            for folder in folders:
+                folderpath = os.path.join(os_location, folder)
+
+                if not os.path.exists(folderpath):
+                    if folder in ["system", "boot"]:
+                        print("system folder lost, please reinstall little es and retry")
+                        quit()
+                    os.mkdir(folderpath)
 
         # system on first launch on pc
         def systemConfiguration():
@@ -719,6 +742,7 @@ try:
             print("\n".join(lines))
 
 
+    BootSystem.systemfileverification()
     BootSystem.login()
     if not os.path.exists(os.path.join(os_location, "tmp", "running.temp")):
         with open(os.path.join(os_location, "tmp", "running.temp"), "w+"):
@@ -936,11 +960,6 @@ try:
                 print(f"{e}")
 
         # app system access
-        elif command == "webserver":
-            actual_dir = os.getcwd()
-            os.chdir(os.path.join(os_location, "system", "programs", "webserver"))
-            os.system("python webserver.py")
-            os.chdir(actual_dir)
 
         else:
             os.system(command)
@@ -951,7 +970,7 @@ except Exception as e:
         if os.path.exists(os.path.join(os_location, "system", "lang", systemData.database[username]["lang"], "error.lang")):
             errorpath = os.path.join(os_location, "system", "lang", systemData.database[username]["lang"], "error.lang")
     except:
-        os.path.join(os_location, "system", "lang", "en", "error.lang")
+        errorpath = os.path.join(os_location, "system", "lang", "en", "error.lang")
 
     with open(errorpath, "r") as txt:
         text = txt.read()
