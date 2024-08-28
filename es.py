@@ -141,27 +141,40 @@ try:
         with open(os.path.join(os_location, "system", "version.rst"), 'r') as file:
             lines = file.readlines()
 
-        version = None
-        version_note = []
+        versionok = False
         notes_en_cours = False
-        
+        version_note = []
+        version = ""
+
         for i in range(1, len(lines) - 1):
             ligne_actuelle = lines[i].strip()
             ligne_suivante = lines[i + 1].strip()
             ligne_precedente = lines[i - 1].strip()
-            
-            # Vérifier si la ligne actuelle est entourée de lines composées uniquement de tirets
-            if all(char == '-' for char in ligne_precedente) and all(char == '-' for char in ligne_suivante):
-                version = textvar["$ver"] = ligne_actuelle
+
+            # Détection du début d'une section de notes de version
+            if (all(char == '-' for char in ligne_precedente) and not ligne_actuelle.startswith('-') and all(char == '-' for char in ligne_suivante) and not versionok):
+                version = ligne_actuelle  # Enregistre le nom de la version
+                textvar["$ver"] = version
                 version_note = []
+                versionok = True
                 notes_en_cours = True  # On commence à enregistrer les notes de cette version
+                print("version")
             elif notes_en_cours:
-                if all(char == '-' for char in ligne_actuelle):
-                    notes_en_cours = False  # On arrête d'enregistrer les notes à la prochaine ligne de tirets
-                elif not ligne_actuelle.startswith('note de version:'):
-                    version_note.append(ligne_actuelle)  # Ajouter les notes à la liste
-                    
-        version_note = "\n".join(version_note)
+                print("l actuel: ", ligne_actuelle)
+                print("l precedente: ", ligne_precedente)
+                print("verification: ", (ligne_actuelle == '-' * len(ligne_actuelle) and (ligne_precedente != version and lines[i - 2].strip() != version)))
+                # Si on trouve une ligne de tirets et que la ligne précédente n'est pas le nom de version, on arrête l'enregistrement
+                if ligne_actuelle == '-' * len(ligne_actuelle) and (ligne_precedente != version and lines[i - 2].strip() != version):
+                    notes_en_cours = False
+                    continue  # On passe à la prochaine itération sans ajouter cette ligne
+
+                # Ignorer les lignes qui commencent par 'version note:' ou '============='
+                if not ligne_actuelle.startswith('version note:') and not ligne_actuelle.startswith("=============") and not ligne_actuelle.startswith(str('-' * len(ligne_actuelle))):
+                    # Ajoute la ligne brute sans strip() pour conserver les espaces, mais on retire les lignes vides inutiles   
+                    version_note.append(lines[i])  # Ajout de la ligne brute pour conserver le format original
+
+        # Réunir toutes les notes de version dans une chaîne unique, en les séparant par des sauts de ligne
+        version_note = "".join(version_note)
 
 
     class FileType:
@@ -960,6 +973,9 @@ try:
                 print(f"{e}")
 
         # app system access
+
+        elif command == "version":
+            print(f"version: {systemData.version} \nnote: \n{systemData.version_note}")
 
         else:
             os.system(command)
