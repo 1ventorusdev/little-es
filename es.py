@@ -1,6 +1,6 @@
 try:
     # import
-    from system.plugins.python import gamedata #, psutil
+    from system.plugins.python import gamedata, sysprint #, psutil
     import os
     import sys
     import socket
@@ -21,6 +21,7 @@ try:
     osmod = "server"
     isIndev = False
     discpath = "/mnt"
+    welcome_output = None
 
     with open(os.path.join(os_location, "system", "path", "discpath.config"), "r") as path:
         discpath = path.read()
@@ -158,7 +159,6 @@ try:
                 version_note = []
                 versionok = True
                 notes_en_cours = True  # On commence à enregistrer les notes de cette version
-                print("version")
             elif notes_en_cours:
                 # Si on trouve une ligne de tirets et que la ligne précédente n'est pas le nom de version, on arrête l'enregistrement
                 if ligne_actuelle == '-' * len(ligne_actuelle) and (ligne_precedente != version and lines[i - 2].strip() != version):
@@ -546,6 +546,7 @@ try:
             textvar["$accountType"] = systemData.database[user]["accountType"]
         
         def viewsystemconf():
+            global welcome_output
             """
             server_output = ""
             user_output = ""
@@ -652,7 +653,7 @@ try:
 
             # Affichage du texte avec les couleurs (si supporté par le terminal)
             if osmod == "server":
-                print(systemText["welcome"])
+                welcome_output = systemText["welcome"]
 
             with open(os.path.join(os_location, "tmp", "running.temp"), "w+"):
                 pass
@@ -660,6 +661,11 @@ try:
             if systemData.database[username]["autoAuth"] == "on":
                 with open(os.path.join(os_location, "tmp", "user-log.temp"), "w+") as dta:
                     dta.write(username)
+
+        def createrunningfiles():
+            if not os.path.exists(os.path.join(os_location, "tmp", "running.temp")):
+                with open(os.path.join(os_location, "tmp", "running.temp"), "w+"):
+                    pass
 
 
     # command and function of system
@@ -752,14 +758,14 @@ try:
             print("\n".join(lines))
 
 
-    BootSystem.systemfileverification()
+    sysprint.Print.Loading.bar("\033[1m\033[31m*\033[0m", "verifying files...", BootSystem.systemfileverification, end_symbol="\033[1m\033[32mOK\033[0m")
     BootSystem.login()
-    if not os.path.exists(os.path.join(os_location, "tmp", "running.temp")):
-        with open(os.path.join(os_location, "tmp", "running.temp"), "w+"):
-            pass
+    sysprint.Print.Loading.bar("\033[1m\033[31m*\033[0m", "create running files...", BootSystem.createrunningfiles, end_symbol="\033[1m\033[32mOK\033[0m")
     BootSystem.nus()
-    BootSystem.loadUserData(username)
-    BootSystem.viewsystemconf()
+    sysprint.Print.Loading.bar("\033[1m\033[31m*\033[0m", "load user data...", BootSystem.loadUserData, username, end_symbol="\033[1m\033[32mOK\033[0m")
+    sysprint.Print.Loading.bar("\033[1m\033[31m*\033[0m", "preparing interfaces...", BootSystem.viewsystemconf, end_symbol="\033[1m\033[32mOK\033[0m")
+
+    print(welcome_output)
 
     while True:
         command = input(entry())
