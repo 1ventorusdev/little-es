@@ -1,7 +1,7 @@
 ---------
 little es
 ---------
-- version actuel : beta 0.10.7
+- version actuel : `beta 0.10.7 <https://github.com/1ventorusdev/little-es/blob/main/system/version.rst#beta-0107>`_
 - rapport de version : `version.rst <https://github.com/1ventorusdev/little-es/blob/main/system/version.rst>`_
 - nom de système : twinsystem
 - langage de developpement : Python
