@@ -4,6 +4,7 @@ beta 0.10.7
 
 version note: 
 =============
+date de sortie: 14:40 29/08/2024
  - ajout:
     - systeme de verification etape par etape du systeme, avec chargement visuel
  - fonctionnalité disponible:
@@ -20,6 +21,7 @@ beta 0.10.6
 
 version note: 
 =============
+date de sortie: 22:10 28/08/2024
  - ajout:
     - securité au demarrage pour eviter les plantage
     - amelioration du traitement de la premiere connexion
@@ -40,6 +42,7 @@ beta 0.10.5
 
 version note: 
 =============
+date de sortie: 23:30 27/08/2024
  - ajout:
     - creation des premier fichier
  - fonctionnalité disponible:
