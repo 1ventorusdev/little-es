@@ -1,0 +1,11 @@
+summary of choice made:
+language: $lang
+username: $username
+password: $password
+firstname: $firstname
+familyname: $familyname
+birthday: $birthday
+accont type: $accountType
+devmode: $devmode
+debugmode: $debugmode
+autoAuth: $autoAuth

@@ -1,0 +1,19 @@
+
+# folder
+__pycache__
+user
+
+!home/test
+!data/test
+
+
+# app python
+test.py
+
+# temp files
+debug.temp
+running.temp
+server-open.temp
+
+# rst files
+note.rst

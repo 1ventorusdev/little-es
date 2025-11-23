@@ -1,0 +1,2 @@
+autoAuth is a system of auto authentification of the system ES and these sub system (little es, one es, etc)
+it allow that on boot system, the last connected user with the autoAuth option enabled is automatically cologged in

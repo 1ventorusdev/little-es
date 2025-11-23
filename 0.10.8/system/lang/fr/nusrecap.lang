@@ -1,0 +1,11 @@
+recapitualtif des choix effectué:
+langue: $lang
+nom d'utilisateur: $username
+mot de passe: $password
+prenom: $firstname
+nom de famille: $familyname
+date de naissance: $birthday
+type de compte: $accountType
+devmode: $devmode
+debugmode: $debugmode
+autoAuth: $autoAuth

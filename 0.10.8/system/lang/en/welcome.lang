@@ -1,0 +1,2 @@
+\033[32mwelcome $firstname !
+Today we are $date\033[0m

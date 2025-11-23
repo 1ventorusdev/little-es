@@ -1,0 +1,2 @@
+autoAuth est un système d'auto authentification propre au systeme ES et ces systeme derivé (little es, one es, etc)
+il permet que lors du demarrage le dernier utilisateur utilisé ayant l'option autAuth d'activé soit automatiquement connecté
