@@ -4,7 +4,7 @@ beta 0.10.8
 
 version note: 
 =============
-date de sortie: 14:40 29/02/2025
+date de sortie: 12:30 23/11/2025
  - ajout:
     - raccourci "~" pour les changement de path
     - listage dynamique des disque sous windows
